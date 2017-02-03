@@ -2,7 +2,7 @@ package com.jaxfire.pagerslidingtab;
 
 public interface RewardsPagerContract {
 
-    interface updaterewardsListener {
+    interface updateRewardsListener {
 
         //TODO Determine how the rewards are passed in
         void updateRewards();

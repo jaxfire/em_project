@@ -4,10 +4,10 @@ package com.jaxfire.pagerslidingtab;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 
-public class AdapterRewardsPager extends FragmentStatePagerAdapter {
+public class AdapterRewardsPager extends FragmentPagerAdapter {
 
     private static final int NUM_PAGES = 3;
 
@@ -16,7 +16,21 @@ public class AdapterRewardsPager extends FragmentStatePagerAdapter {
     //Using SparseArray as it is more memory efficient than using a HashMap to map Integers to Objects
     private static SparseArray<FragmentRewardsPager> fragStore = new SparseArray(3);
 
-    //We use newInstance to facilitate the passing of 'position' into the fragment
+    public AdapterRewardsPager(FragmentManager fm) {
+        super(fm);
+
+        for (int i = 0; i < NUM_PAGES; i++){
+            FragmentRewardsPager f = new FragmentRewardsPager();
+            Bundle bdl = new Bundle(1);
+            bdl.putInt(EXTRA_POSITION, i);
+            f.setArguments(bdl);
+            fragStore.put(i, f);
+
+        }
+
+    }
+
+    /*//We use newInstance to facilitate the passing of 'position' into the fragment
     public static final FragmentRewardsPager newInstance(int position)
     {
 
@@ -29,15 +43,34 @@ public class AdapterRewardsPager extends FragmentStatePagerAdapter {
             return f;
         }
         return fragStore.get(position);
+    }*/
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+
+        String title = "";
+
+        switch (position){
+            case 0:
+                title = "Nutrition";
+                break;
+            case 1:
+                title = "Fitness";
+                break;
+            case 2:
+                title = "Wellness";
+                break;
+        }
+
+        return title;
     }
 
-    public AdapterRewardsPager(FragmentManager fm) {
-        super(fm);
-    }
+
 
     @Override
     public Fragment getItem(int position) {
-        return this.newInstance(position);
+        //return this.newInstance(position);
+        return fragStore.get(position);
     }
 
     @Override
