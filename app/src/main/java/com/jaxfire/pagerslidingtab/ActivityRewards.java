@@ -48,7 +48,6 @@ public class ActivityRewards extends FragmentActivity {
         tabs.setIndicatorHeight(3);
         tabs.setShouldExpand(true);//TODO Test setShouldExpand() on larger devices
         tabs.setAllCaps(false);
-        Log.d("jim", "" + tabs.getTabPaddingLeftRight());
         tabs.setTabPaddingLeftRight(18);
         tabs.setViewPager(mPagerRewards);
 
