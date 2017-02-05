@@ -8,4 +8,9 @@
     <color name="tabs_light_grey">#d4d4d4</color>
     <color name="tabs_dark_grey">#777777</color>
     <color name="tabs_background">#d3d3d3</color>
+
+    <color name="recyclerview_list_item_text_yellow">#f3d714</color>
+
+    <color name="black_transparent">#50000000</color>
+
 </resources>

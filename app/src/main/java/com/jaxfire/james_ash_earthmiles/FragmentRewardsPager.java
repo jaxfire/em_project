@@ -53,7 +53,7 @@ public class FragmentRewardsPager extends Fragment{
                 int totalItemCount = FragmentRewardsPager.this.recyclerView.getLayoutManager().getItemCount();
                 int lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition();
                 if (totalItemCount == lastVisiblePosition + 1) {
-                    requestRewardItem();
+                        requestRewardItem();
                 }
             }
         });
@@ -62,14 +62,13 @@ public class FragmentRewardsPager extends Fragment{
         //if (rewardItems.size() == 0) {
         if(true){
             requestRewardItem();
+            requestRewardItem();
         }
 
         return rootView;
     }
 
     private void requestRewardItem() {
-        Log.d("jim", "requestRewardItem: ");
-        //TODO
         adapter.addRewardItem(new RewardItem("Google", "Search Engine Company"));
         adapter.notifyDataSetChanged();
     }

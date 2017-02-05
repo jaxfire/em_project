@@ -35,8 +35,8 @@ public class RewardItemHolder extends RecyclerView.ViewHolder implements View.On
         //mPhoto = photo;
         //Picasso.with(mItemImage.getContext()).load(photo.getUrl()).into(mItemImage);
         itemImage.setImageResource(R.drawable.em_test_image);
-        itemCompany.setText(rewardItem.getCompanyName());
-        itemDescription.setText(rewardItem.getDescription());
+        //itemCompany.setText(rewardItem.getCompanyName());
+        //itemDescription.setText(rewardItem.getDescription());
     }
 
 }
