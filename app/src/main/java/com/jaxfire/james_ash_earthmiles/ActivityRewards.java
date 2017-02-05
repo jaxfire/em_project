@@ -1,10 +1,11 @@
-package com.jaxfire.pagerslidingtab;
+package com.jaxfire.james_ash_earthmiles;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,7 +13,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 
-import static com.jaxfire.pagerslidingtab.R.id.pager;
+import static com.jaxfire.james_ash_earthmiles.R.id.pager;
 
 public class ActivityRewards extends FragmentActivity {
 
@@ -20,17 +21,22 @@ public class ActivityRewards extends FragmentActivity {
 
     private AdapterRewardsPager mPagerRewardsAdapter;
 
-    private PresenterRewardsPager presenterPager;
+    private RewardsPagerContract.ViewListener presenterPager;
 
     private ArrayList<TextView> tabScrollerTitles;
 
     PagerSlidingTabStrip tabs;
+
+    Animation textGrow, textShrink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        textGrow = AnimationUtils.loadAnimation(this, R.anim.animation_text_scale_grow);
+        textShrink = AnimationUtils.loadAnimation(this, R.anim.animation_text_scale_shrink);
 
         //Get a reference to the ViewPager
         mPagerRewards = (ViewPager) findViewById(pager);
@@ -56,12 +62,15 @@ public class ActivityRewards extends FragmentActivity {
         tabScrollerTitles = new ArrayList<>(3);
         for(int i = 0; i < 3; i++) {
             TextView temp = (TextView) tabsLayout.getChildAt(i);
-            temp.setTextSize(temp.getTextSize()); // No idea why this works! but it works
+            // No idea why this works but fixes the text size issue
+            //TODO test on other devices
+            temp.setTextSize(temp.getTextSize());
             tabScrollerTitles.add(temp);
         }
 
         styleTitles(0);
 
+        //TODO Use injection so that we can mock
         //Create the presenter layer
         presenterPager = new PresenterRewardsPager(this, mPagerRewardsAdapter);
 
@@ -94,11 +103,42 @@ public class ActivityRewards extends FragmentActivity {
         //Make the currently selected title a darker shade of grey and the others a lighter grey
         for (int i = 0; i < 3; i++){
             if (i == position){
-                tabScrollerTitles.get(i).setTextColor(ContextCompat.getColor(this, R.color.tabs_dark_grey));
+                final TextView selectedTitle = tabScrollerTitles.get(i);
+                selectedTitle.setTextColor(ContextCompat.getColor(this, R.color.tabs_dark_grey));
+
+                //Run the animation
+                textGrow.reset();
+                textShrink.reset();
+                selectedTitle.clearAnimation();
+                selectedTitle.startAnimation(textGrow);
+
+                textGrow.setAnimationListener(new Animation.AnimationListener() {
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        selectedTitle.startAnimation(textShrink);
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        //na
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        //na
+                    }
+
+                });
+
+
             } else {
                 tabScrollerTitles.get(i).setTextColor(ContextCompat.getColor(this, R.color.tabs_light_grey));
             }
         }
+
+
+
     }
 
 }

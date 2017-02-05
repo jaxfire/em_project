@@ -1,15 +1,16 @@
-package com.jaxfire.pagerslidingtab;
+package com.jaxfire.james_ash_earthmiles;
 
 public interface RewardsPagerContract {
 
-    interface updateRewardsListener {
+    interface UpdateRewardsListener {
 
         //TODO Determine how the rewards are passed in
+        //This will be implemented by the recyclerview adapters
         void updateRewards();
 
     }
 
-    interface loadImageListener {
+    interface ViewListener {
 
         void onPageChanged(int position);
 

@@ -1,8 +1,8 @@
-package com.jaxfire.pagerslidingtab;
+package com.jaxfire.james_ash_earthmiles;
 
 import android.util.Log;
 
-public class PresenterRewardsPager implements RewardsPagerContract.loadImageListener{
+public class PresenterRewardsPager implements RewardsPagerContract.ViewListener {
 
     ActivityRewards activityRewards;
     AdapterRewardsPager adapter;

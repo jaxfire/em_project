@@ -1,4 +1,4 @@
-package com.jaxfire.pagerslidingtab;
+package com.jaxfire.james_ash_earthmiles;
 
 
 import android.support.v4.app.Fragment;

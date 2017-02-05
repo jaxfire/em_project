@@ -3,18 +3,14 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView style="?android:textAppearanceMedium"
-            android:id="@+id/frag_text"
-            android:padding="16dp"
-            android:lineSpacingMultiplier="1.2"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="default text" />
-    </ScrollView>
+            android:text="TEST"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
