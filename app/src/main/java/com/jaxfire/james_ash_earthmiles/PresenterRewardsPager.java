@@ -2,15 +2,16 @@ package com.jaxfire.james_ash_earthmiles;
 
 import android.util.Log;
 
-public class PresenterRewardsPager implements RewardsPagerContract.ViewListener {
+public class PresenterRewardsPager implements RewardsViewPresenterContract.ViewListener {
 
-    ActivityRewards activityRewards;
+    RewardsViewPresenterContract.UIHandler activityRewards;
     AdapterRewardsPager adapter;
+
     boolean initialImageBufferComplete;
 
     int initialPage = -1;
 
-    public PresenterRewardsPager(ActivityRewards activityRewards, AdapterRewardsPager adapter){
+    public PresenterRewardsPager(RewardsViewPresenterContract.UIHandler activityRewards, AdapterRewardsPager adapter){
         this.activityRewards = activityRewards;
         this.adapter = adapter;
     }

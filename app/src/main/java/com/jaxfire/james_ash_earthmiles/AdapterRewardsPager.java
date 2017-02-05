@@ -13,37 +13,24 @@ public class AdapterRewardsPager extends FragmentPagerAdapter {
 
     public static final String EXTRA_POSITION = "position";
 
-    //Using SparseArray as it is more memory efficient than using a HashMap to map Integers to Objects
+    //Google's Android docs recommend using a SparseArray to map ints to Objects...
+    //however Arraylist or Hashmap may be more efficient as there are no gaps in our indexes
     private static SparseArray<FragmentRewardsPager> fragStore = new SparseArray(3);
 
     public AdapterRewardsPager(FragmentManager fm) {
         super(fm);
 
+        //Instantiate all the required fragments up front
         for (int i = 0; i < NUM_PAGES; i++){
-            FragmentRewardsPager f = new FragmentRewardsPager();
+            FragmentRewardsPager fragment = new FragmentRewardsPager();
+            //TODO Is the fragment's knowledge of its position still required?
             Bundle bdl = new Bundle(1);
             bdl.putInt(EXTRA_POSITION, i);
-            f.setArguments(bdl);
-            fragStore.put(i, f);
-
+            fragment.setArguments(bdl);
+            fragStore.put(i, fragment);
         }
 
     }
-
-    /*//We use newInstance to facilitate the passing of 'position' into the fragment
-    public static final FragmentRewardsPager newInstance(int position)
-    {
-
-        if(fragStore.get(position) == null) {
-            FragmentRewardsPager f = new FragmentRewardsPager();
-            Bundle bdl = new Bundle(1);
-            bdl.putInt(EXTRA_POSITION, position);
-            f.setArguments(bdl);
-            fragStore.put(position, f);
-            return f;
-        }
-        return fragStore.get(position);
-    }*/
 
     @Override
     public CharSequence getPageTitle(int position) {
@@ -65,13 +52,8 @@ public class AdapterRewardsPager extends FragmentPagerAdapter {
         return title;
     }
 
-
-
     @Override
-    public Fragment getItem(int position) {
-        //return this.newInstance(position);
-        return fragStore.get(position);
-    }
+    public Fragment getItem(int position) { return fragStore.get(position); }
 
     @Override
     public int getCount() {
