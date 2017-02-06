@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 
-import com.jaxfire.james_ash_earthmiles.RewardsViewPresenterContract;
 import com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews.FragmentRecyclerView;
 
 public class AdapterViewPager extends FragmentPagerAdapter {

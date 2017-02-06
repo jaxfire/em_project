@@ -3,20 +3,20 @@ package com.jaxfire.james_ash_earthmiles;
 
 import com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews.RewardItem;
 
-public interface RewardsViewPagerContract {
+public interface ViewToModelContract {
 
     //TODO
-    interface ViewImageHandler {
+    interface ModelListener {
         //Implemented by the RecyclerView adapters
 
         void updateRewards(RewardItem rewardItem);
 
     }
 
-    interface ModelRecyclerViewListener {
+    interface ViewListener {
         //Implemented by the DataModel layer
 
-        void onRecyclerViewScroll();
+        void requestRewardItem(int position);
 
     }
 

@@ -6,12 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jaxfire.james_ash_earthmiles.R;
-import com.jaxfire.james_ash_earthmiles.RewardsViewPagerContract;
-import com.jaxfire.james_ash_earthmiles.RewardsViewPresenterContract;
+import com.jaxfire.james_ash_earthmiles.ViewToModelContract;
 
 import java.util.ArrayList;
 
-public class AdapterRecyclerView extends RecyclerView.Adapter<RewardItemHolder> implements RewardsViewPagerContract.ViewImageHandler {
+public class AdapterRecyclerView extends RecyclerView.Adapter<RewardItemHolder> implements ViewToModelContract.ModelListener {
 
     private ArrayList<RewardItem> rewardItems;
 

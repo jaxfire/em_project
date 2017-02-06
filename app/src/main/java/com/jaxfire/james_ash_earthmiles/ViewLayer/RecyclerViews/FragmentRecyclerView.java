@@ -17,6 +17,7 @@ public class FragmentRecyclerView extends Fragment{
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private AdapterRecyclerView adapter;
+    private DataModel dataModel;
 
     public static final String EXTRA_POSITION = "position";
 
@@ -43,7 +44,9 @@ public class FragmentRecyclerView extends Fragment{
 
         adapter = new AdapterRecyclerView();
         recyclerView.setAdapter(adapter);
-        DataModel.getInstance(adapter,position);
+
+        //TODO Use Dependency Injection to enable mocking of data layer
+        dataModel = DataModel.getInstance(position, adapter);
 
         //add the onScrollListener
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -54,7 +57,7 @@ public class FragmentRecyclerView extends Fragment{
                 int totalItemCount = FragmentRecyclerView.this.recyclerView.getLayoutManager().getItemCount();
                 int lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition();
                 if (totalItemCount == lastVisiblePosition + 1) {
-                        requestRewardItem();
+                        dataModel.requestRewardItem(position);
                 }
             }
         });
@@ -62,16 +65,11 @@ public class FragmentRecyclerView extends Fragment{
         //TODO Query the cache
         //if (rewardItems.size() == 0) {
         if(true){
-            requestRewardItem();
-            requestRewardItem();
+            dataModel.requestRewardItem(position);
+            dataModel.requestRewardItem(position);
         }
 
         return rootView;
-    }
-
-    private void requestRewardItem() {
-        adapter.updateRewards(new RewardItem("Google", "Search Engine Company"));
-        adapter.notifyDataSetChanged();
     }
 
 }

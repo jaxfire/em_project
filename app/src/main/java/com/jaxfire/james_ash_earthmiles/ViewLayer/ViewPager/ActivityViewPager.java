@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.jaxfire.james_ash_earthmiles.R;
-import com.jaxfire.james_ash_earthmiles.RewardsViewPresenterContract;
 
 import java.util.ArrayList;
 
