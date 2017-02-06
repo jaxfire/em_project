@@ -11,8 +11,8 @@ import com.jaxfire.james_ash_earthmiles.R;
 
 public class RewardItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private TextView itemCompany;
-    private TextView itemDescription;
+    private TextView name;
+    private TextView shortDescription;
     private TextView emCost;
     private TextView realValue;
     private ImageView itemImage;
@@ -20,8 +20,8 @@ public class RewardItemHolder extends RecyclerView.ViewHolder implements View.On
     public RewardItemHolder(View v) {
         super(v);
 
-        itemCompany = (TextView) v.findViewById(R.id.item_company);
-        itemDescription = (TextView) v.findViewById(R.id.item_description);
+        name = (TextView) v.findViewById(R.id.name);
+        shortDescription = (TextView) v.findViewById(R.id.short_description);
         emCost = (TextView) v.findViewById(R.id.item_em_cost);
         realValue = (TextView) v.findViewById(R.id.real_world_value);
         itemImage = (ImageView) v.findViewById(R.id.item_image);
@@ -47,9 +47,11 @@ public class RewardItemHolder extends RecyclerView.ViewHolder implements View.On
             itemImage.setImageResource(R.drawable.em_recycler_view_item_loading);
         }
 
+        name.setText(rewardItem.getReward_partner().getName());
+        shortDescription.setText(rewardItem.getShort_description());
         emCost.setText(rewardItem.getPoints() + " em");
         realValue.setText(rewardItem.getPound_value_text());
-        //itemDescription.setText(rewardItem.getDescription());
+
     }
 
 }

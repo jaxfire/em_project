@@ -48,7 +48,7 @@ public class ActivityViewPager extends FragmentActivity{
             @Override
             public void onClick(View v) {
 
-                DataModel.getInstance(getParent()).loadImage(2,counter);
+                DataModel.getInstance(getParent()).loadImage(0,counter);
                 counter++;
             }
         });

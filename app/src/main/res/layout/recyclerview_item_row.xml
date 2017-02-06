@@ -26,28 +26,31 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/item_company"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|start"
         android:layout_marginTop="40dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:textSize="16sp"
         android:textColor="@android:color/white"
         android:text="Pure Chimp Flash Sale!"/>
 
     <TextView
-        android:id="@+id/item_description"
+        android:id="@+id/short_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|start"
         android:layout_marginTop="75dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:textSize="16sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:ellipsize="none"
+        android:scrollHorizontally="false"
+        android:textSize="15sp"
         android:textColor="@android:color/white"
-        android:text="50% OFF + FREE DELIVERY (ENDS 5TH NIGHT)"/>
+        android:text="50% OFF + FREE DELIVERY (ENDS 5TH NIGHT)"
+        />
 
     <TextView
         android:id="@+id/item_em_cost"
@@ -55,8 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_marginBottom="16dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:textSize="14sp"
         android:textColor="@color/recyclerview_list_item_text_yellow"
         android:text="99 em"/>
@@ -67,8 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:textSize="14sp"
         android:textColor="@color/recyclerview_list_item_text_yellow"
         android:text="Worth up to £7"/>
