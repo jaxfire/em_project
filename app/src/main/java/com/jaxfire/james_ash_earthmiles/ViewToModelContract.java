@@ -1,7 +1,7 @@
 package com.jaxfire.james_ash_earthmiles;
 
 
-import com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews.RewardItem;
+import com.jaxfire.james_ash_earthmiles.Model.RewardItem;
 
 public interface ViewToModelContract {
 
@@ -16,7 +16,7 @@ public interface ViewToModelContract {
     interface ViewListener {
         //Implemented by the DataModel layer
 
-        void requestRewardItem(int position);
+        RewardItem getRewardItem(int viewPagerIndex, int rewardIndex);
 
     }
 

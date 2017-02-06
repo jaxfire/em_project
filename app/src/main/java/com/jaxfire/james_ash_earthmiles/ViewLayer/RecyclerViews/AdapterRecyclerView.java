@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jaxfire.james_ash_earthmiles.Model.DataModel;
+import com.jaxfire.james_ash_earthmiles.Model.RewardItem;
 import com.jaxfire.james_ash_earthmiles.R;
 import com.jaxfire.james_ash_earthmiles.ViewToModelContract;
 
@@ -12,18 +14,16 @@ import java.util.ArrayList;
 
 public class AdapterRecyclerView extends RecyclerView.Adapter<RewardItemHolder> implements ViewToModelContract.ModelListener {
 
-    private ArrayList<RewardItem> rewardItems;
+    private DataModel dataModel;
+    int viewPagerPosition;
 
-    public AdapterRecyclerView() {
-        if (false){
-            //TODO
-            //Check the cache to see if we already have items downloaded
-            //oooooor... link this directly to the cache????
-            //However this is not great for MVP and testing
-        }else {
-            //Create an empty list of reward items
-            this.rewardItems = new ArrayList<>();
-        }
+    public AdapterRecyclerView(int viewPagerPosition) {
+        //TODO Use Dependency Injection to enable mocking of data layer
+        dataModel = DataModel.getInstance(viewPagerPosition, this);
+    }
+
+    public void requestRewardItem(int index){
+        dataModel.requestRewardItem(viewPagerPosition, index);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<RewardItemHolder> 
 
     @Override
     public void onBindViewHolder(RewardItemHolder holder, int position) {
-        holder.bindRewardItem(rewardItems.get(position));
+        holder.bindRewardItem(dataModel.re(position));
     }
 
     @Override

@@ -6,12 +6,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jaxfire.james_ash_earthmiles.Model.RewardItem;
 import com.jaxfire.james_ash_earthmiles.R;
 
 public class RewardItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private TextView itemCompany;
     private TextView itemDescription;
+    private TextView emCost;
+    private TextView realValue;
     private ImageView itemImage;
 
     public RewardItemHolder(View v) {
@@ -19,6 +22,8 @@ public class RewardItemHolder extends RecyclerView.ViewHolder implements View.On
 
         itemCompany = (TextView) v.findViewById(R.id.item_company);
         itemDescription = (TextView) v.findViewById(R.id.item_description);
+        emCost = (TextView) v.findViewById(R.id.item_em_cost);
+        realValue = (TextView) v.findViewById(R.id.real_world_value);
         itemImage = (ImageView) v.findViewById(R.id.item_image);
 
         v.setOnClickListener(this);
@@ -37,8 +42,9 @@ public class RewardItemHolder extends RecyclerView.ViewHolder implements View.On
         //mPhoto = photo;
         //Picasso.with(mItemImage.getContext()).load(photo.getUrl()).into(mItemImage);
         itemImage.setImageResource(R.drawable.em_test_image);
-        itemCompany.setText(rewardItem.getCompanyName());
-        itemDescription.setText(rewardItem.getDescription());
+        emCost.setText(rewardItem.getPoints() + " em");
+        realValue.setText(rewardItem.getPound_value_text());
+        //itemDescription.setText(rewardItem.getDescription());
     }
 
 }

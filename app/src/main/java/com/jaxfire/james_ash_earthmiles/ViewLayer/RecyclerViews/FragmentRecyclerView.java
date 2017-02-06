@@ -17,18 +17,18 @@ public class FragmentRecyclerView extends Fragment{
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private AdapterRecyclerView adapter;
-    private DataModel dataModel;
 
-    public static final String EXTRA_POSITION = "position";
+
+    public static final String EXTRA_POSITION = "viewPagerPosition";
 
     //TODO os this required anymore?
-    private int position;
+    private int viewPagerPosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        position = getArguments().getInt(EXTRA_POSITION);
+        viewPagerPosition = getArguments().getInt(EXTRA_POSITION);
 
     }
 
@@ -42,11 +42,8 @@ public class FragmentRecyclerView extends Fragment{
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new AdapterRecyclerView();
+        adapter = new AdapterRecyclerView(viewPagerPosition);
         recyclerView.setAdapter(adapter);
-
-        //TODO Use Dependency Injection to enable mocking of data layer
-        dataModel = DataModel.getInstance(position, adapter);
 
         //add the onScrollListener
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -57,17 +54,16 @@ public class FragmentRecyclerView extends Fragment{
                 int totalItemCount = FragmentRecyclerView.this.recyclerView.getLayoutManager().getItemCount();
                 int lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition();
                 if (totalItemCount == lastVisiblePosition + 1) {
-                        dataModel.requestRewardItem(position);
+                    adapter.requestRewardItem(totalItemCount);
                 }
             }
         });
 
-        //TODO Query the cache
-        //if (rewardItems.size() == 0) {
-        if(true){
-            dataModel.requestRewardItem(position);
-            dataModel.requestRewardItem(position);
-        }
+        //TODO This needs reworking
+        //Initial load of images as buffer
+        adapter.requestRewardItem(0);
+        adapter.requestRewardItem(1);
+        adapter.requestRewardItem(2);
 
         return rootView;
     }

@@ -37,6 +37,14 @@ dependencies {
     compile 'com.android.support:support-v13:25.1.1'
 
     //3rd Party Features
+    //ViewPager Sliding Tab
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+
+    //Create rounded bitmaps
     compile 'com.makeramen:roundedimageview:2.3.0'
+
+    // GSON with Retrofit
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
 }

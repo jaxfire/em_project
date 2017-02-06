@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.jaxfire.james_ash_earthmiles.Model.DataModel;
 import com.jaxfire.james_ash_earthmiles.R;
 
 import java.util.ArrayList;
