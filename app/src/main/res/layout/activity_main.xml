@@ -7,6 +7,12 @@
     tools:context=".ViewLayer.ViewPager.ActivityViewPager"
     android:orientation="vertical">
 
+    <Button
+        android:id="@+id/load_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="load_image"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

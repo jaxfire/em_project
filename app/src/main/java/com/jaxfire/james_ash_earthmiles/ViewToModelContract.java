@@ -9,7 +9,7 @@ public interface ViewToModelContract {
     interface ModelListener {
         //Implemented by the RecyclerView adapters
 
-        void updateRewards(RewardItem rewardItem);
+        void notifyImageLoaded(int i);
 
     }
 

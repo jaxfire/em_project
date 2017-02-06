@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.jaxfire.james_ash_earthmiles.Model.DataModel;
 import com.jaxfire.james_ash_earthmiles.R;
 import com.jaxfire.james_ash_earthmiles.ViewLayer.ViewPager.ActivityViewPager;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class LoadingScreen extends AppCompatActivity {
 
@@ -17,8 +19,12 @@ public class LoadingScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
 
+        // Initialize ImageLoader with configuration.
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(this);
+        ImageLoader.getInstance().init(config.build());
+
         //Call initialise and wait for loadJsonCallback
-        DataModel.initialise(this);
+        DataModel.initialise(this, ImageLoader.getInstance());
     }
 
     public void loadJsonCallback(boolean loadSuccess){

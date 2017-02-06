@@ -59,6 +59,8 @@ public class RewardItem implements Comparable<RewardItem>
 
     private Bitmap loadedImage;
 
+    private boolean hasImageLoaded;
+
     public String getImage_content_height ()
     {
         return image_content_height;
@@ -326,6 +328,14 @@ public class RewardItem implements Comparable<RewardItem>
 
     public void setLoadedImage(Bitmap loadedImage) {
         this.loadedImage = loadedImage;
+    }
+
+    public boolean getHasImageLoaded() {
+        return hasImageLoaded;
+    }
+
+    public void setHasImageLoaded(boolean hasImageLoaded) {
+        this.hasImageLoaded = hasImageLoaded;
     }
 
     @Override

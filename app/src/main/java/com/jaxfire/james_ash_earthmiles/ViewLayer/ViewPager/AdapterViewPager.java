@@ -1,36 +1,20 @@
 package com.jaxfire.james_ash_earthmiles.ViewLayer.ViewPager;
 
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.SparseArray;
+import android.util.Log;
 
-import com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews.FragmentRecyclerView;
+import com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews.FragmentViewPager;
 
 public class AdapterViewPager extends FragmentPagerAdapter {
 
     private static final int NUM_PAGES = 3;
-
-    public static final String EXTRA_POSITION = "position";
-
-    //Google's Android docs recommend using a SparseArray to map ints to Objects...
-    //however Arraylist or Hashmap may be more efficient as there are no gaps in our indexes
-    private static SparseArray<FragmentRecyclerView> fragStore = new SparseArray(3);
+    public static final String VIEWPAGERPOSITION = "position";
 
     public AdapterViewPager(FragmentManager fm) {
         super(fm);
-
-        //Instantiate all the required fragments up front
-        for (int i = 0; i < NUM_PAGES; i++){
-            FragmentRecyclerView fragment = new FragmentRecyclerView();
-            //TODO Is the fragment's knowledge of its position still required?
-            Bundle bdl = new Bundle(1);
-            bdl.putInt(EXTRA_POSITION, i);
-            fragment.setArguments(bdl);
-            fragStore.put(i, fragment);
-        }
 
     }
 
@@ -55,7 +39,12 @@ public class AdapterViewPager extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) { return fragStore.get(position); }
+    public Fragment getItem(int position) {
+
+        Log.d("adapter1", "getItem: " + position);
+        return FragmentViewPager.newInstance(position);
+
+    }
 
     @Override
     public int getCount() {

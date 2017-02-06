@@ -39,9 +39,14 @@ public class RewardItemHolder extends RecyclerView.ViewHolder implements View.On
     }
 
     public void bindRewardItem(RewardItem rewardItem) {
-        //mPhoto = photo;
-        //Picasso.with(mItemImage.getContext()).load(photo.getUrl()).into(mItemImage);
-        itemImage.setImageResource(R.drawable.em_test_image);
+
+        if (rewardItem.getHasImageLoaded()){
+            itemImage.setImageBitmap(rewardItem.getLoadedImage());
+        } else{
+            //Default not yet loaded image
+            itemImage.setImageResource(R.drawable.em_recycler_view_item_loading);
+        }
+
         emCost.setText(rewardItem.getPoints() + " em");
         realValue.setText(rewardItem.getPound_value_text());
         //itemDescription.setText(rewardItem.getDescription());

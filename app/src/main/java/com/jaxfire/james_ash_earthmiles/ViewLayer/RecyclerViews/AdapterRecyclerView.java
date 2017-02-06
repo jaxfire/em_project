@@ -1,6 +1,7 @@
 package com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,19 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<RewardItemHolder> 
     int viewPagerPosition;
 
     public AdapterRecyclerView(int viewPagerPosition) {
+
+        //This was the missed assignment! 4 hours!
+        this.viewPagerPosition = viewPagerPosition;
+
         //TODO Use Dependency Injection to enable mocking of data layer
+        Log.d("adapter1", "recycler adapter created " + viewPagerPosition);
         dataModel = DataModel.getInstance(viewPagerPosition, this);
     }
 
-    public void requestRewardItem(int index){
-        dataModel.requestRewardItem(viewPagerPosition, index);
-    }
+    /*public void requestRewardItem(int index){
+        Log.d("indexTest", "requestRewardItem: " + index);
+        dataModel.getRewardItem(viewPagerPosition, index);
+    }*/
 
     @Override
     public RewardItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,17 +41,20 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<RewardItemHolder> 
 
     @Override
     public void onBindViewHolder(RewardItemHolder holder, int position) {
-        holder.bindRewardItem(dataModel.re(position));
+        holder.bindRewardItem(dataModel.getRewardItem(viewPagerPosition, position));
     }
 
     @Override
     public int getItemCount() {
-        return rewardItems.size();
+        return dataModel.getNumOfRewardItems(viewPagerPosition);
     }
 
-    public void updateRewards(RewardItem rewardItem) {
-        this.rewardItems.add(rewardItem);
-        //TODO check if there is a more specific data update call
+    public void notifyImageLoaded(int index){
+        Log.d("loadImage", "viewpager position: " + viewPagerPosition + " image index: " + index);
+        //TODO check if there is a more specific data update call than notifyDataSetChanged()
         this.notifyDataSetChanged();
+        //this.notifyItemChanged(index);
+        //this.rewardItems.add(rewardItem);
+
     }
 }

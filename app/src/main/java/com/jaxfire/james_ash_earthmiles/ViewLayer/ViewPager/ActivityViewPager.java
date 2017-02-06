@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,16 +32,35 @@ public class ActivityViewPager extends FragmentActivity{
 
     Animation textGrow, textShrink;
 
+    int counter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d("indexTest", "Main onCreate: ");
+
+        //TODO Remove this - for testing only
+        Button loadImageBtn = (Button) findViewById(R.id.load_image);
+        loadImageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DataModel.getInstance(getParent()).loadImage(2,counter);
+                counter++;
+            }
+        });
+
         //Get references
         textGrow = AnimationUtils.loadAnimation(this, R.anim.animation_text_scale_grow);
         textShrink = AnimationUtils.loadAnimation(this, R.anim.animation_text_scale_shrink);
         mPagerRewards = (ViewPager) findViewById(pager);
+
+        //Instantiate and set the adapter
+        mPagerRewardsAdapter = new AdapterViewPager(getSupportFragmentManager());
+        mPagerRewards.setAdapter(mPagerRewardsAdapter);
 
         //Called when user swipes to a new page
         mPagerRewards.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -60,10 +82,6 @@ public class ActivityViewPager extends FragmentActivity{
             }
 
         });
-
-        //Instantiate and set the adapter
-        mPagerRewardsAdapter = new AdapterViewPager(getSupportFragmentManager());
-        mPagerRewards.setAdapter(mPagerRewardsAdapter);
 
         // Customise and bind the pagerslidingtabstrip to the ViewPager
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
