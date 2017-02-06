@@ -1,4 +1,4 @@
-package com.jaxfire.james_ash_earthmiles;
+package com.jaxfire.james_ash_earthmiles.ViewLayer.ViewPager;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -10,18 +10,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.jaxfire.james_ash_earthmiles.R;
+import com.jaxfire.james_ash_earthmiles.RewardsViewPresenterContract;
 
 import java.util.ArrayList;
 
 import static com.jaxfire.james_ash_earthmiles.R.id.pager;
 
-public class ActivityRewards extends FragmentActivity implements RewardsViewPresenterContract.UIHandler {
+public class ActivityViewPager extends FragmentActivity{
 
     private ViewPager mPagerRewards;
 
-    private AdapterRewardsPager mPagerRewardsAdapter;
-
-    private RewardsViewPresenterContract.ViewListener presenterPager;
+    private AdapterViewPager mPagerRewardsAdapter;
 
     private ArrayList<TextView> tabScrollerTitles;
 
@@ -40,8 +40,29 @@ public class ActivityRewards extends FragmentActivity implements RewardsViewPres
         textShrink = AnimationUtils.loadAnimation(this, R.anim.animation_text_scale_shrink);
         mPagerRewards = (ViewPager) findViewById(pager);
 
+        //Called when user swipes to a new page
+        mPagerRewards.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+
+                styleTitles(position);
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //Not used
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                //Not used
+            }
+
+        });
+
         //Instantiate and set the adapter
-        mPagerRewardsAdapter = new AdapterRewardsPager(getSupportFragmentManager());
+        mPagerRewardsAdapter = new AdapterViewPager(getSupportFragmentManager());
         mPagerRewards.setAdapter(mPagerRewardsAdapter);
 
         // Customise and bind the pagerslidingtabstrip to the ViewPager
@@ -69,31 +90,7 @@ public class ActivityRewards extends FragmentActivity implements RewardsViewPres
 
         styleTitles(0);
 
-        //TODO Use injection so that we can mock the presenter layer
-        //Create the presenter layer
-        presenterPager = new PresenterRewardsPager(this, mPagerRewardsAdapter);
 
-        presenterPager.onPageChanged(mPagerRewards.getCurrentItem());
-
-        //Called when user swipes to a new page
-        mPagerRewards.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int position) {
-                presenterPager.onPageChanged(position);
-            }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                //Not used
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                //Not used
-            }
-
-        });
 
     }//End onCreate
 

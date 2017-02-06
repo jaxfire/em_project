@@ -1,10 +1,12 @@
-package com.jaxfire.james_ash_earthmiles;
+package com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.jaxfire.james_ash_earthmiles.R;
 
 public class RewardItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

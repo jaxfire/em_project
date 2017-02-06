@@ -1,20 +1,22 @@
-package com.jaxfire.james_ash_earthmiles;
+package com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews;
 
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FragmentRewardsPager extends Fragment{
+import com.jaxfire.james_ash_earthmiles.Model.DataModel;
+import com.jaxfire.james_ash_earthmiles.R;
+
+public class FragmentRecyclerView extends Fragment{
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private RecyclerAdapter adapter;
+    private AdapterRecyclerView adapter;
 
     public static final String EXTRA_POSITION = "position";
 
@@ -26,8 +28,6 @@ public class FragmentRewardsPager extends Fragment{
     {
         super.onCreate(savedInstanceState);
         position = getArguments().getInt(EXTRA_POSITION);
-
-
 
     }
 
@@ -41,8 +41,9 @@ public class FragmentRewardsPager extends Fragment{
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new RecyclerAdapter();
+        adapter = new AdapterRecyclerView();
         recyclerView.setAdapter(adapter);
+        DataModel.getInstance(adapter,position);
 
         //add the onScrollListener
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -50,7 +51,7 @@ public class FragmentRewardsPager extends Fragment{
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
-                int totalItemCount = FragmentRewardsPager.this.recyclerView.getLayoutManager().getItemCount();
+                int totalItemCount = FragmentRecyclerView.this.recyclerView.getLayoutManager().getItemCount();
                 int lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition();
                 if (totalItemCount == lastVisiblePosition + 1) {
                         requestRewardItem();
@@ -69,7 +70,7 @@ public class FragmentRewardsPager extends Fragment{
     }
 
     private void requestRewardItem() {
-        adapter.addRewardItem(new RewardItem("Google", "Search Engine Company"));
+        adapter.updateRewards(new RewardItem("Google", "Search Engine Company"));
         adapter.notifyDataSetChanged();
     }
 

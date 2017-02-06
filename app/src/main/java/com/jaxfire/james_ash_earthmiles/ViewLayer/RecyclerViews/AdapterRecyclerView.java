@@ -1,17 +1,21 @@
-package com.jaxfire.james_ash_earthmiles;
+package com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jaxfire.james_ash_earthmiles.R;
+import com.jaxfire.james_ash_earthmiles.RewardsViewPagerContract;
+import com.jaxfire.james_ash_earthmiles.RewardsViewPresenterContract;
+
 import java.util.ArrayList;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RewardItemHolder> {
+public class AdapterRecyclerView extends RecyclerView.Adapter<RewardItemHolder> implements RewardsViewPagerContract.ViewImageHandler {
 
     private ArrayList<RewardItem> rewardItems;
 
-    public RecyclerAdapter() {
+    public AdapterRecyclerView() {
         if (false){
             //TODO
             //Check the cache to see if we already have items downloaded
@@ -39,9 +43,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RewardItemHolder> {
         return rewardItems.size();
     }
 
-    //May not be needing if we link directly to the cache
-    public void addRewardItem(RewardItem rewardItem){
+    public void updateRewards(RewardItem rewardItem) {
         this.rewardItems.add(rewardItem);
+        //TODO check if there is a more specific data update call
+        this.notifyDataSetChanged();
     }
-
 }

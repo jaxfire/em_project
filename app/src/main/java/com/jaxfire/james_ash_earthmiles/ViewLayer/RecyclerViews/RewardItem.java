@@ -1,6 +1,4 @@
-package com.jaxfire.james_ash_earthmiles;
-
-import android.graphics.Bitmap;
+package com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews;
 
 public class RewardItem {
 
