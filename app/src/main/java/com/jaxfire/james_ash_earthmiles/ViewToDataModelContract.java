@@ -19,7 +19,6 @@ public interface ViewToDataModelContract {
 
     //Loading screen
     interface JSONCallbackHandler {
-
         void loadJsonCallback(boolean loadSuccess);
 
     }
