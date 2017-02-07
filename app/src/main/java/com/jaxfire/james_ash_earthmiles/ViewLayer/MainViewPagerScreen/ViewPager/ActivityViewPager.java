@@ -1,19 +1,15 @@
-package com.jaxfire.james_ash_earthmiles.ViewLayer.ViewPager;
+package com.jaxfire.james_ash_earthmiles.ViewLayer.MainViewPagerScreen.ViewPager;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.jaxfire.james_ash_earthmiles.Model.DataModel;
 import com.jaxfire.james_ash_earthmiles.R;
 
 import java.util.ArrayList;
@@ -32,33 +28,18 @@ public class ActivityViewPager extends FragmentActivity{
 
     Animation textGrow, textShrink;
 
-    int counter = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("indexTest", "Main onCreate: ");
-
-        //TODO Remove this - for testing only
-        Button loadImageBtn = (Button) findViewById(R.id.load_image);
-        loadImageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                DataModel.getInstance(getParent()).loadImage(0,counter);
-                counter++;
-            }
-        });
-
         //Get references
         textGrow = AnimationUtils.loadAnimation(this, R.anim.animation_text_scale_grow);
         textShrink = AnimationUtils.loadAnimation(this, R.anim.animation_text_scale_shrink);
         mPagerRewards = (ViewPager) findViewById(pager);
 
-        //Instantiate and set the adapter
+        //Instantiate and set the ViewPager's adapter
         mPagerRewardsAdapter = new AdapterViewPager(getSupportFragmentManager());
         mPagerRewards.setAdapter(mPagerRewardsAdapter);
 
@@ -90,7 +71,7 @@ public class ActivityViewPager extends FragmentActivity{
         tabs.setUnderlineHeight(2);
         tabs.setIndicatorColorResource(R.color.tabs_indicator);
         tabs.setIndicatorHeight(3);
-        tabs.setShouldExpand(true);//TODO Test setShouldExpand() on larger devices
+        tabs.setShouldExpand(true);
         tabs.setAllCaps(false);
         tabs.setTabPaddingLeftRight(18);
         tabs.setViewPager(mPagerRewards);
@@ -100,9 +81,7 @@ public class ActivityViewPager extends FragmentActivity{
         tabScrollerTitles = new ArrayList<>(3);
         for(int i = 0; i < 3; i++) {
             TextView temp = (TextView) tabsLayout.getChildAt(i);
-            // No idea why "setTextSize(temp.getTextSize()" works but it fixes the text size issue
-            //TODO test on other devices
-            temp.setTextSize(temp.getTextSize());
+            temp.setTextSize(18);
             tabScrollerTitles.add(temp);
         }
 
@@ -136,8 +115,7 @@ public class ActivityViewPager extends FragmentActivity{
                     }
 
                     @Override
-                    public void onAnimationStart(Animation animation) {
-                        //na
+                    public void onAnimationStart(Animation animation) {//Not used
                     }
 
                     @Override
@@ -149,12 +127,12 @@ public class ActivityViewPager extends FragmentActivity{
 
 
             } else {
+
                 //Reset the unselected titles to a light grey
                 tabScrollerTitles.get(i).setTextColor(ContextCompat.getColor(this, R.color.tabs_light_grey));
+
             }
         }
-
-
 
     } //End styleTitles
 

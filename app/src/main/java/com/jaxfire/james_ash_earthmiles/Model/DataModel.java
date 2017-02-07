@@ -1,71 +1,71 @@
 package com.jaxfire.james_ash_earthmiles.Model;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.View;
+import android.widget.ImageView;
 
-import com.jaxfire.james_ash_earthmiles.LoadingScreen.LoadingScreen;
+import com.jaxfire.james_ash_earthmiles.ViewLayer.LoadingScreen.LoadingScreen;
 import com.jaxfire.james_ash_earthmiles.R;
-import com.jaxfire.james_ash_earthmiles.ViewToModelContract;
+import com.jaxfire.james_ash_earthmiles.ViewToDataModelContract;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DataModel implements ViewToModelContract.ViewListener {
+public class DataModel implements ViewToDataModelContract.RewardDataProvider, ViewToDataModelContract.ImageLoader {
 
     private static DataModel singletonInstance;
-    Context context;
+
     ImageLoader imageLoader;
-    LoadingScreen loadingScreen;
+        DisplayImageOptions imageoptions;
+    //TODO change to interface
+    ViewToDataModelContract.JSONCallbackHandler jsonCallbackHandler;
+
     List<List<RewardItem>> rewardTypes = new ArrayList<>(3);
-    ArrayList<RewardItem> nutrition;
-    ArrayList<RewardItem> fitness;
-    ArrayList<RewardItem> wellness;
-    private ViewToModelContract.ModelListener[] adapters = new ViewToModelContract.ModelListener[3];
+    ArrayList<RewardItem> nutrition, fitness, wellness;
 
     private DataModel() {
 
+        //Holds the specific types of rewards
+        nutrition = new ArrayList<>();
+        fitness = new ArrayList<>();
+        wellness = new ArrayList();
+
+        //Adds them to one single Arraylist for ease of access later on
+        rewardTypes.add(nutrition);
+        rewardTypes.add(fitness);
+        rewardTypes.add(wellness);
+
+        //UIL options - cache to minimise bandwidth usage and provide a custom load-failed image
+        imageoptions = new DisplayImageOptions.Builder()
+                .showImageOnFail(R.drawable.em_recycler_view_item_failed)
+                .cacheInMemory(true)
+                .build();
+
+        this.imageLoader = ImageLoader.getInstance();
+
+        loadJson();
     }
 
-    public static void initialise(LoadingScreen loadingScreen, ImageLoader imageLoader) {
-        Log.d("jim", "initialise: ");
+
+    public static void initialise(ViewToDataModelContract.JSONCallbackHandler jsonCallbackHandler) {
         if (singletonInstance == null) {
             singletonInstance = new DataModel();
         }
-        singletonInstance.imageLoader = imageLoader;
-        singletonInstance.loadingScreen = loadingScreen;
-        singletonInstance.loadJson();
+        singletonInstance.jsonCallbackHandler = jsonCallbackHandler;
     }
 
-    public static DataModel getInstance(int position, ViewToModelContract.ModelListener adapter) {
+    public static DataModel getInstance() {
         if (singletonInstance != null) {
-            Log.d("adapter1", "getInstance: position = " + position);
-            singletonInstance.addAdapter(position, adapter);
             return singletonInstance;
         } else {
-            Log.d("jim", "The data model was not initialised");
+            //TODO - handle error, the DataModel should be initialised prior to use
             return null;
         }
-    }
-
-    //TODO remove - only for testing. Used with the test loadImage button
-    public static DataModel getInstance(Context context) {
-        singletonInstance.context = context;
-        return singletonInstance;
-    }
-
-    private void addAdapter(int position, ViewToModelContract.ModelListener adapter) {
-        adapters[position] = adapter;
     }
 
     public void loadJson() {
@@ -73,34 +73,27 @@ public class DataModel implements ViewToModelContract.ViewListener {
         //Creating an object of our api interface
         ApiService api = RetroClient.getApiService();
 
-        //Calling JSON
+        //Call the JSON
         Call<AllRewardData> call = api.getMyJSON();
 
-        //Enqueue Callback will be called when get response...
         call.enqueue(new Callback<AllRewardData>() {
             @Override
             public void onResponse(Call<AllRewardData> call, Response<AllRewardData> response) {
 
                 if (response.isSuccessful()) {
 
-                    //The actual results (rewards) from the returned json object
+                    //The rewards from the returned json object
                     RewardItem[] theRewards = response.body().getResults();
-
-                    nutrition = new ArrayList<>();
-                    fitness = new ArrayList<>();
-                    wellness = new ArrayList();
-
-                    rewardTypes.add(nutrition);
-                    rewardTypes.add(fitness);
-                    rewardTypes.add(wellness);
 
                     for (RewardItem rewardItem : theRewards) {
 
+                        //Filter by location
                         for (String s : rewardItem.getLocations()) {
 
-                            //Using the UK only for the project
+                            //Using the UK only for this project
                             if (s.equals("Available throughout UK")) {
 
+                                //Sort into the various categories
                                 switch (rewardItem.getCategory()) {
 
                                     case "Nutrition":
@@ -119,67 +112,42 @@ public class DataModel implements ViewToModelContract.ViewListener {
                         }
                     }
 
-                    Log.d("adapter1", "nutrition size " + rewardTypes.get(0).size());
-                    Log.d("adapter1", "fitness size " + rewardTypes.get(1).size());
-                    Log.d("adapter1", "wellness size " + rewardTypes.get(2).size());
-
-                    //Sort the reward items (newest to oldest) - based on the presumption that ids increment over time.
-                    //They appear to already be in the correct order so no sort is required
-                    //Collections.sort(rewardTypes.get(0));
-                    //Collections.sort(rewardTypes.get(1));
-                    //Collections.sort(rewardTypes.get(2));
-
-                    loadingScreen.loadJsonCallback(true);
+                    //Tell the loading screen to continue to the next activity
+                    jsonCallbackHandler.loadJsonCallback(true);
 
                 } else {
+                    //TODO Report the error and let the user know that something went wrong
+                    Log.d("jim", "json response unsuccessful");
                     //Toast.makeText(MainActivity.this, "json call unsuccessful", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<AllRewardData> call, Throwable t) {
-                //Toast.makeText(MainActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                //dialog.dismiss();
-                loadingScreen.loadJsonCallback(false);
+                jsonCallbackHandler.loadJsonCallback(false);
             }
         });
 
     }
 
-
-    //ViewToModelContract interface
+    //ViewToDataModelContract interface
     public RewardItem getRewardItem(int viewPagerIndex, int rewardIndex) {
-
-        //TODO check for no more rewards here
-        Log.d("jim", "" + viewPagerIndex + " " + rewardIndex);
 
         return rewardTypes.get(viewPagerIndex).get(rewardIndex);
 
     }
 
-    //for the ViewPager
-    public int getNumOfRewardItems(int viewPagerIndex) {
+    //From the Recyclerview adapters
+    public int getItemCount(int viewPagerIndex) {
 
         return rewardTypes.get(viewPagerIndex).size();
 
     }
 
-    public void loadImage(final int viewPagerIndex, final int rewardIndex) {
+    //Download an image or get from cache and dierctly set it to the relevant TextView
+    public void loadImage(int viewPagerPosition, int itemIndex, final ImageView imageView) {
 
-        Log.d("loadImage", "loadImage: " + viewPagerIndex);
+        imageLoader.displayImage(rewardTypes.get(viewPagerPosition).get(itemIndex).getImage_320x280(), imageView);
 
-        final RewardItem tempReward = rewardTypes.get(viewPagerIndex).get(rewardIndex);
-
-        imageLoader.loadImage(tempReward.getImage_320x280(), new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-
-                tempReward.setLoadedImage(loadedImage);
-                tempReward.setHasImageLoaded(true);
-                Log.d("whichAdpater", "" + viewPagerIndex);
-                adapters[viewPagerIndex].notifyImageLoaded(rewardIndex);
-            }
-        });
     }
-
 }

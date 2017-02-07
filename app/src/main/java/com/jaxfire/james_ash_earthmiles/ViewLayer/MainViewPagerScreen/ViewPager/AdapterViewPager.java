@@ -1,4 +1,4 @@
-package com.jaxfire.james_ash_earthmiles.ViewLayer.ViewPager;
+package com.jaxfire.james_ash_earthmiles.ViewLayer.MainViewPagerScreen.ViewPager;
 
 
 import android.support.v4.app.Fragment;
@@ -6,12 +6,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
-import com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews.FragmentViewPager;
+import com.jaxfire.james_ash_earthmiles.ViewLayer.MainViewPagerScreen.RecyclerViews.FragmentViewPager;
 
 public class AdapterViewPager extends FragmentPagerAdapter {
 
     private static final int NUM_PAGES = 3;
-    public static final String VIEWPAGERPOSITION = "position";
+    public static final String VIEW_PAGER_POSITION = "position";
 
     public AdapterViewPager(FragmentManager fm) {
         super(fm);

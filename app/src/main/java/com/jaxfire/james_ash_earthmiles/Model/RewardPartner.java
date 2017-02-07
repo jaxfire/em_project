@@ -1,6 +1,5 @@
 package com.jaxfire.james_ash_earthmiles.Model;
 
-
 public class RewardPartner
 {
     private String id;
@@ -54,6 +53,6 @@ public class RewardPartner
     @Override
     public String toString()
     {
-        return "ClassPojo [id = "+id+", name = "+name+", image = "+image+", image_web = "+image_web+"]";
+        return id;
     }
 }

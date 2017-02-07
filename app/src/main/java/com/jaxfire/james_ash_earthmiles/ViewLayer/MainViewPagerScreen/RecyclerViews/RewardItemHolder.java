@@ -1,13 +1,16 @@
-package com.jaxfire.james_ash_earthmiles.ViewLayer.RecyclerViews;
+package com.jaxfire.james_ash_earthmiles.ViewLayer.MainViewPagerScreen.RecyclerViews;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jaxfire.james_ash_earthmiles.Model.DataModel;
 import com.jaxfire.james_ash_earthmiles.Model.RewardItem;
 import com.jaxfire.james_ash_earthmiles.R;
+import com.jaxfire.james_ash_earthmiles.ViewLayer.RewardPurchaseScreen.ActivityRewardPurchase;
 
 public class RewardItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -31,26 +34,22 @@ public class RewardItemHolder extends RecyclerView.ViewHolder implements View.On
 
     @Override
     public void onClick(View v) {
-        Log.d("jim", "Go to reward page");
-        /*Context context = itemView.getContext();
-        Intent showPhotoIntent = new Intent(context, PhotoActivity.class);
-        //showPhotoIntent.putExtra(PHOTO_KEY, mPhoto);
-        context.startActivity(showPhotoIntent);*/
+        Context context = itemView.getContext();
+        Intent rewardsPageintent = new Intent(context, ActivityRewardPurchase.class);
+        //TODO pass in Intent extras here for the activity to use
+        context.startActivity(rewardsPageintent);
     }
 
-    public void bindRewardItem(RewardItem rewardItem) {
-
-        if (rewardItem.getHasImageLoaded()){
-            itemImage.setImageBitmap(rewardItem.getLoadedImage());
-        } else{
-            //Default not yet loaded image
-            itemImage.setImageResource(R.drawable.em_recycler_view_item_loading);
-        }
+    public void bindRewardItem(RewardItem rewardItem, int viewPagerPosition, int itemIndex, DataModel dataModel) {
 
         name.setText(rewardItem.getReward_partner().getName());
         shortDescription.setText(rewardItem.getShort_description());
         emCost.setText(rewardItem.getPoints() + " em");
         realValue.setText(rewardItem.getPound_value_text());
+
+        //Manually setting the loading image seems to work better than UIL's showImageOnLoading() feature
+        itemImage.setImageResource(R.drawable.em_recycler_view_item_loading);
+        dataModel.loadImage(viewPagerPosition, itemIndex, itemImage);
 
     }
 

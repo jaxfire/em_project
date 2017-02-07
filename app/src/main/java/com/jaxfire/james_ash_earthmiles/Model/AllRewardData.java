@@ -66,6 +66,6 @@ public class AllRewardData
     @Override
     public String toString()
     {
-        return "ClassPojo [results = "+results+", previous = "+previous+", count = "+count+", next = "+next+"]";
+        return "All Rewards Data. Size: " + count;
     }
 }

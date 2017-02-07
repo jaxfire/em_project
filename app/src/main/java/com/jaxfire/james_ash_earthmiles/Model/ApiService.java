@@ -9,10 +9,7 @@ import retrofit2.http.GET;
  */
 public interface ApiService {
 
-    /*
-    Retrofit get annotation with our URL
-    And our method that will return us the List of ContactList
-    */
-    @GET("/api/v1/rewards/all_rewards/?format=json")
+    //TODO Add in url
+    @GET("/api/**/******/*****/?format=json")
     Call<AllRewardData> getMyJSON();
 }

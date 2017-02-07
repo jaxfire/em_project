@@ -1,8 +1,5 @@
 package com.jaxfire.james_ash_earthmiles.Model;
 
-
-import android.graphics.Bitmap;
-
 public class RewardItem implements Comparable<RewardItem>
 {
     private String image_content_height;
@@ -56,10 +53,6 @@ public class RewardItem implements Comparable<RewardItem>
     private String points_for_gifting;
 
     private String has_in_app_purchase;
-
-    private Bitmap loadedImage;
-
-    private boolean hasImageLoaded;
 
     public String getImage_content_height ()
     {
@@ -321,29 +314,13 @@ public class RewardItem implements Comparable<RewardItem>
         this.has_in_app_purchase = has_in_app_purchase;
     }
 
-
-    public Bitmap getLoadedImage() {
-        return loadedImage;
-    }
-
-    public void setLoadedImage(Bitmap loadedImage) {
-        this.loadedImage = loadedImage;
-    }
-
-    public boolean getHasImageLoaded() {
-        return hasImageLoaded;
-    }
-
-    public void setHasImageLoaded(boolean hasImageLoaded) {
-        this.hasImageLoaded = hasImageLoaded;
-    }
-
     @Override
     public String toString()
     {
-        return getId();
+        return id;
     }
 
+    //Used to sort by property - not needed now.
     @Override
     public int compareTo(RewardItem o) {
         //Show newest items at the top
