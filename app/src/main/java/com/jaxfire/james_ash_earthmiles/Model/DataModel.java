@@ -123,7 +123,9 @@ public class DataModel implements ViewToDataModelContract.RewardDataProvider, Vi
 
             @Override
             public void onFailure(Call<AllRewardData> call, Throwable t) {
+
                 jsonCallbackHandler.loadJsonCallback(false);
+
             }
         });
 
