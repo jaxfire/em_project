@@ -45,7 +45,7 @@ public class LoadingScreen extends AppCompatActivity implements ViewToDataModelC
 
         } else {
             //TODO Check internet request to user and try again
-            Toast.makeText(this, "Please check your internet connection and try again", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Could not connect to the server", Toast.LENGTH_LONG).show();
         }
     }
 }

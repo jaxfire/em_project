@@ -18,12 +18,14 @@ public class FragmentViewPager extends Fragment{
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     public AdapterRecyclerView adapter;
+    public static final String VIEW_PAGER_POSITION = "position";
+
 
     public static FragmentViewPager newInstance(int viewPagerPosition) {
 
         FragmentViewPager f = new FragmentViewPager();
         Bundle b = new Bundle();
-        b.putInt(AdapterViewPager.VIEW_PAGER_POSITION, viewPagerPosition);
+        b.putInt(VIEW_PAGER_POSITION, viewPagerPosition);
         f.setArguments(b);
         return f;
     }
@@ -32,7 +34,7 @@ public class FragmentViewPager extends Fragment{
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        adapter = new AdapterRecyclerView(getArguments().getInt(AdapterViewPager.VIEW_PAGER_POSITION));
+        adapter = new AdapterRecyclerView(getArguments().getInt(VIEW_PAGER_POSITION));
     }
 
     @Override

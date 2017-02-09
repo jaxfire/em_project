@@ -63,9 +63,4 @@ public class AllRewardData
         this.next = next;
     }
 
-    @Override
-    public String toString()
-    {
-        return "All Rewards Data. Size: " + count;
-    }
 }

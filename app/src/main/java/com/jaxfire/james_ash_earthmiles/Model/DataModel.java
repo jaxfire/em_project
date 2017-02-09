@@ -3,6 +3,8 @@ package com.jaxfire.james_ash_earthmiles.Model;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.jaxfire.james_ash_earthmiles.Categories;
+import com.jaxfire.james_ash_earthmiles.Locations;
 import com.jaxfire.james_ash_earthmiles.ViewLayer.LoadingScreen.LoadingScreen;
 import com.jaxfire.james_ash_earthmiles.R;
 import com.jaxfire.james_ash_earthmiles.ViewToDataModelContract;
@@ -87,27 +89,25 @@ public class DataModel implements ViewToDataModelContract.RewardDataProvider, Vi
 
                     for (RewardItem rewardItem : theRewards) {
 
-                        //Filter by location
+                        //Filter by location - 'locations' can contain more than one location so we loop through them all
                         for (String s : rewardItem.getLocations()) {
 
                             //Using the UK only for this project
-                            if (s.equals("Available throughout UK")) {
+                            if (s.equals(Locations.UK.toString())) {
 
                                 //Sort into the various categories
-                                switch (rewardItem.getCategory()) {
+                                String rewardCategory = rewardItem.getCategory();
 
-                                    case "Nutrition":
-                                        rewardTypes.get(0).add(rewardItem);
-                                        break;
-                                    case "Fitness":
-                                        rewardTypes.get(1).add(rewardItem);
-                                        break;
-
-                                    case "Wellness":
-                                        rewardTypes.get(2).add(rewardItem);
-                                        break;
-
+                                if (rewardCategory.equals(Categories.NUTRITION.toString())){
+                                    rewardTypes.get(0).add(rewardItem);
                                 }
+                                if (rewardCategory.equals(Categories.FITNESS.toString())){
+                                    rewardTypes.get(1).add(rewardItem);
+                                }
+                                if (rewardCategory.equals(Categories.WELLNESS.toString())){
+                                    rewardTypes.get(2).add(rewardItem);
+                                }
+
                             }
                         }
                     }
@@ -117,7 +117,6 @@ public class DataModel implements ViewToDataModelContract.RewardDataProvider, Vi
 
                 } else {
                     //TODO Report the error and let the user know that something went wrong
-                    Log.d("jim", "json response unsuccessful");
                     //Toast.makeText(MainActivity.this, "json call unsuccessful", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -144,7 +143,7 @@ public class DataModel implements ViewToDataModelContract.RewardDataProvider, Vi
 
     }
 
-    //Download an image or get from cache and dierctly set it to the relevant TextView
+    //Download an image or get from cache and directly set it to the relevant TextView
     public void loadImage(int viewPagerPosition, int itemIndex, final ImageView imageView) {
 
         imageLoader.displayImage(rewardTypes.get(viewPagerPosition).get(itemIndex).getImage_320x280(), imageView);
