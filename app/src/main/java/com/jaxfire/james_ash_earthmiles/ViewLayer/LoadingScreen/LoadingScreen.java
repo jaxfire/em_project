@@ -23,8 +23,10 @@ public class LoadingScreen extends AppCompatActivity implements ViewToDataModelC
         // Initialize ImageLoader with custom configuration
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .memoryCacheExtraOptions(320, 280) // default = device screen dimensions
-                .diskCacheExtraOptions(320, 280, null)
-                .tasksProcessingOrder(QueueProcessingType.LIFO) // LIFO is important
+                // LIFO is important as it will load the most recent images first.
+                // These will be those that the user is currently trying to view and not
+                // those further up the recycle view
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
                 .build();
 
         // Apply configuration

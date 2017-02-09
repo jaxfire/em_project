@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jaxfire.james_ash_earthmiles.R;
-import com.jaxfire.james_ash_earthmiles.ViewLayer.MainViewPagerScreen.ViewPager.AdapterViewPager;
 
 public class FragmentViewPager extends Fragment{
 
@@ -52,7 +51,6 @@ public class FragmentViewPager extends Fragment{
         linearLayoutManager = new LinearLayoutManager(view.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         recyclerView.setAdapter(adapter);
 
     }
