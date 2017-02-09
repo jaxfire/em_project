@@ -1,11 +1,9 @@
 package com.jaxfire.james_ash_earthmiles.Model;
 
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.jaxfire.james_ash_earthmiles.Categories;
 import com.jaxfire.james_ash_earthmiles.Locations;
-import com.jaxfire.james_ash_earthmiles.ViewLayer.LoadingScreen.LoadingScreen;
 import com.jaxfire.james_ash_earthmiles.R;
 import com.jaxfire.james_ash_earthmiles.ViewToDataModelContract;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -23,8 +21,7 @@ public class DataModel implements ViewToDataModelContract.RewardDataProvider, Vi
     private static DataModel singletonInstance;
 
     ImageLoader imageLoader;
-        DisplayImageOptions imageoptions;
-    //TODO change to interface
+    private DisplayImageOptions imageoptions;
     ViewToDataModelContract.JSONCallbackHandler jsonCallbackHandler;
 
     List<List<RewardItem>> rewardTypes = new ArrayList<>(3);
