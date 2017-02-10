@@ -143,9 +143,10 @@ public class DataModel implements ViewToDataModelContract.RewardDataProvider, Vi
     }
 
     //Download an image or get from cache and directly set it to the relevant TextView
-    public void loadImage(int viewPagerPosition, int itemIndex, final ImageView imageView) {
+    public void loadImage(int viewPagerPosition, int itemIndex, ImageView imageView) {
 
-        imageLoader.displayImage(rewardTypes.get(viewPagerPosition).get(itemIndex).getImage_320x280(), imageView, imageOptions);
+        imageLoader.displayImage(rewardTypes.get(viewPagerPosition).get(itemIndex).getImage_web(), imageView, imageOptions);
 
     }
+
 }

@@ -10,6 +10,6 @@ import retrofit2.http.GET;
 public interface ApiService {
 
     //TODO Add in url
-    @GET("/api/**/******/*******/?format=json")
+    @GET("/api/**/******/******/?format=json")
     Call<AllRewardData> getMyJSON();
 }
