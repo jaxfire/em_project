@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -13,8 +14,6 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.jaxfire.james_ash_earthmiles.R;
 
 import java.util.ArrayList;
-
-import static com.jaxfire.james_ash_earthmiles.R.id.pager;
 
 public class ActivityViewPager extends FragmentActivity{
 
@@ -37,7 +36,7 @@ public class ActivityViewPager extends FragmentActivity{
         //Get references
         textGrow = AnimationUtils.loadAnimation(this, R.anim.animation_text_scale_grow);
         textShrink = AnimationUtils.loadAnimation(this, R.anim.animation_text_scale_shrink);
-        mPagerRewards = (ViewPager) findViewById(pager);
+        mPagerRewards = (ViewPager) findViewById(R.id.pager);
 
         //Instantiate and set the ViewPager's adapter
         mPagerRewardsAdapter = new AdapterViewPager(getSupportFragmentManager());
@@ -79,9 +78,15 @@ public class ActivityViewPager extends FragmentActivity{
         //Get references to the TextViews inside the tabScroller
         LinearLayout tabsLayout = (LinearLayout) tabs.getChildAt(0);
         tabScrollerTitles = new ArrayList<>(3);
+
+        //Larger devices should have a larger text size
+        int textSize = 18; //Default for all other devices
+        if(getResources().getBoolean(R.bool.isTablet)) {
+            textSize = 30;
+        }
         for(int i = 0; i < 3; i++) {
             TextView temp = (TextView) tabsLayout.getChildAt(i);
-            temp.setTextSize(18);
+            temp.setTextSize(textSize);
             tabScrollerTitles.add(temp);
         }
 
