@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetroClient {
 
     //TODO Add in url
-    private static final String ROOT_URL = "https://app.earthmiles.co.uk";
+    private static final String ROOT_URL = "https://******.*********.co.uk";
 
 
     private static Retrofit getRetrofitInstance() {
