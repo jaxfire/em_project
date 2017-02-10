@@ -79,6 +79,7 @@ public class ActivityViewPager extends FragmentActivity{
         LinearLayout tabsLayout = (LinearLayout) tabs.getChildAt(0);
         tabScrollerTitles = new ArrayList<>(3);
 
+        //TODO Add text sizes for other screen sizes
         //Larger devices should have a larger text size
         int textSize = 18; //Default for all other devices
         if(getResources().getBoolean(R.bool.isTablet)) {
