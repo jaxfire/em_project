@@ -41,8 +41,10 @@ public class RewardItemHolder extends RecyclerView.ViewHolder implements View.On
 
     @Override
     public void onClick(View v) {
+
         Context context = itemView.getContext();
         Intent rewardsPageintent = new Intent(context, ActivityRewardPurchase.class);
+
         RewardItem rewardItem = dataModel.getRewardItem(viewPagerPosition, itemIndex);
         rewardsPageintent.putExtra("name", rewardItem.getReward_partner().getName());
         rewardsPageintent.putExtra("short_description", rewardItem.getShort_description());
@@ -54,6 +56,7 @@ public class RewardItemHolder extends RecyclerView.ViewHolder implements View.On
         rewardsPageintent.putExtra("imageURL", rewardItem.getImage_320x280());
 
         context.startActivity(rewardsPageintent);
+
     }
 
     public void bindRewardItem(RewardItem rewardItem, int viewPagerPosition, int itemIndex) {
