@@ -21,7 +21,7 @@ public class DataModel implements ViewToDataModelContract.RewardDataProvider, Vi
     private static DataModel singletonInstance;
 
     ImageLoader imageLoader;
-    private DisplayImageOptions imageoptions;
+    DisplayImageOptions imageOptions;
     ViewToDataModelContract.JSONCallbackHandler jsonCallbackHandler;
 
     List<List<RewardItem>> rewardTypes = new ArrayList<>(3);
@@ -40,7 +40,7 @@ public class DataModel implements ViewToDataModelContract.RewardDataProvider, Vi
         rewardTypes.add(wellness);
 
         //UIL options - cache to minimise bandwidth usage and provide a custom load-failed image
-        imageoptions = new DisplayImageOptions.Builder()
+        imageOptions = new DisplayImageOptions.Builder()
                 .showImageOnFail(R.drawable.em_recycler_view_item_failed)
                 .cacheInMemory(true)
                 .build();
@@ -145,7 +145,7 @@ public class DataModel implements ViewToDataModelContract.RewardDataProvider, Vi
     //Download an image or get from cache and directly set it to the relevant TextView
     public void loadImage(int viewPagerPosition, int itemIndex, final ImageView imageView) {
 
-        imageLoader.displayImage(rewardTypes.get(viewPagerPosition).get(itemIndex).getImage_320x280(), imageView);
+        imageLoader.displayImage(rewardTypes.get(viewPagerPosition).get(itemIndex).getImage_320x280(), imageView, imageOptions);
 
     }
 }
