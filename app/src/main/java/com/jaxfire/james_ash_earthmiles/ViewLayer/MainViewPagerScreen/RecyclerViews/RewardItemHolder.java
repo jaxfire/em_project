@@ -14,14 +14,21 @@ import com.jaxfire.james_ash_earthmiles.ViewLayer.RewardPurchaseScreen.ActivityR
 
 public class RewardItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+    private DataModel dataModel;
+
     private TextView name;
     private TextView shortDescription;
     private TextView emCost;
     private TextView realValue;
     private ImageView itemImage;
 
-    public RewardItemHolder(View v) {
+    int viewPagerPosition;
+    int itemIndex;
+
+    public RewardItemHolder(View v, DataModel datamodel) {
         super(v);
+
+        this.dataModel = datamodel;
 
         name = (TextView) v.findViewById(R.id.name);
         shortDescription = (TextView) v.findViewById(R.id.short_description);
@@ -36,11 +43,23 @@ public class RewardItemHolder extends RecyclerView.ViewHolder implements View.On
     public void onClick(View v) {
         Context context = itemView.getContext();
         Intent rewardsPageintent = new Intent(context, ActivityRewardPurchase.class);
-        //TODO pass in Intent extras here for the activity to use
+        RewardItem rewardItem = dataModel.getRewardItem(viewPagerPosition, itemIndex);
+        rewardsPageintent.putExtra("name", rewardItem.getReward_partner().getName());
+        rewardsPageintent.putExtra("short_description", rewardItem.getShort_description());
+        rewardsPageintent.putExtra("validity", rewardItem.getValidity());
+        rewardsPageintent.putExtra("availing", rewardItem.getAvailing());
+        rewardsPageintent.putExtra("location", rewardItem.getLocation());
+        rewardsPageintent.putExtra("timing", rewardItem.getTiming());
+        rewardsPageintent.putExtra("logo", rewardItem.getReward_partner().getImage_web());
+        rewardsPageintent.putExtra("imageURL", rewardItem.getImage_320x280());
+
         context.startActivity(rewardsPageintent);
     }
 
-    public void bindRewardItem(RewardItem rewardItem, int viewPagerPosition, int itemIndex, DataModel dataModel) {
+    public void bindRewardItem(RewardItem rewardItem, int viewPagerPosition, int itemIndex) {
+
+        this.viewPagerPosition = viewPagerPosition;
+        this.itemIndex = itemIndex;
 
         name.setText(rewardItem.getReward_partner().getName());
         shortDescription.setText(rewardItem.getShort_description());

@@ -25,12 +25,12 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<RewardItemHolder>{
     @Override
     public RewardItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_row, parent, false);
-        return new RewardItemHolder(inflatedView);
+        return new RewardItemHolder(inflatedView, dataModel);
     }
 
     @Override
     public void onBindViewHolder(RewardItemHolder holder, int position) {
-        holder.bindRewardItem(dataModel.getRewardItem(viewPagerPosition, position), viewPagerPosition, position, dataModel);
+        holder.bindRewardItem(dataModel.getRewardItem(viewPagerPosition, position), viewPagerPosition, position);
     }
 
     @Override
